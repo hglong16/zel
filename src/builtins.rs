@@ -4,6 +4,7 @@ use std::env;
 use std::path::Path;
 
 use crate::context::Context;
+use crate::history::History;
 
 pub fn run_cd(args: &[String], ctx: &mut Context) -> bool {
     let new_dir = if args.len() < 2 {
@@ -31,4 +32,22 @@ pub fn run_cd(args: &[String], ctx: &mut Context) -> bool {
 
 pub fn run_exit(_args: &[String]) -> bool {
     false
+}
+
+
+pub fn run_history(_args: &[String], history: &History) -> bool {
+    match history.list(5) {
+
+
+        Ok(commands) => {
+            println!("WE ARE GENIUS");
+            for cmd in commands {
+                println!("{}", cmd);
+            }
+        },
+        Err(e) => {
+            eprintln!("Error, cannot read history");
+        }
+    }
+    true
 }
